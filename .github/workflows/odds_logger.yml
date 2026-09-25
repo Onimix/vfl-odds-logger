@@ -30,4 +30,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Auto: odds snapshot"
-          file_pattern: 'odds_history/*.json'
+          file_pattern: 'odds_history/*.json'# trigger 
