@@ -1,0 +1,33 @@
+name: Odds Logger
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+jobs:
+  log-odds:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run odds logger
+        run: python odds_logger.py
+
+      - name: Commit and push new odds data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto: odds snapshot"
+          file_pattern: 'odds_history/*.json'
